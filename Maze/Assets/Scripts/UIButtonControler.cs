@@ -3,9 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UIButtonControler : MonoBehaviour {
+    
+    public GameObject playerCamera;
+    public GameObject player;
+    
+    
 
-	public void ShowWholeMazeButton()
+    public void ShowWholeMazeButton()
     {
-        Debug.Log("click");
+        if (playerCamera.activeSelf)
+        {
+            playerCamera.SetActive(false);
+            player.GetComponent<PlayerControler>().CanMove = false;
+        }
+        else
+        {
+            playerCamera.SetActive(true);
+            player.GetComponent<PlayerControler>().CanMove = true;
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CharacterControler : MonoBehaviour {
 
+    public int playerFolowers;
     public GameObject player;
     public GameObject chest;
     
@@ -62,6 +63,8 @@ public class CharacterControler : MonoBehaviour {
         Node endNode =  distanceList.Where(i => i.Item2 == distanceList.Max(t => t.Item2)).FirstOrDefault().Item1;
 
         player.transform.position = playerStartNode.gameObject.transform.position;
+        player.GetComponent<ObjectTilePosition>().SetTile(playerStartNode);
+        SetTileForFollowers(player, playerStartNode, playerFolowers);
         player.SetActive(true);
         chest.transform.position = endNode.gameObject.transform.position;
         chest.SetActive(true);
@@ -70,6 +73,17 @@ public class CharacterControler : MonoBehaviour {
 
        
        
+    }
+
+    public void SetTileForFollowers(GameObject toSet,Node node,int count)
+    {
+        if(count != 0)
+        {
+            count--;
+            toSet.GetComponent<Folower>().follower.transform.position = node.transform.position;
+            toSet.GetComponent<Folower>().follower.GetComponent<ObjectTilePosition>().SetTile(node);
+            SetTileForFollowers(toSet.GetComponent<Folower>().follower, node, count);
+        }
     }
 
 }

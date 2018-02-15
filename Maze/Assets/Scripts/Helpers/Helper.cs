@@ -6,7 +6,7 @@ public static class Helper  {
 
     public static float distance(Vector2 vector)
     {
-        return Mathf.Sqrt(vector.x * vector.x - vector.y * vector.y);
+        return Mathf.Sqrt(vector.x * vector.x + vector.y * vector.y);
     }
 
     public static float distance(Vector2 start, Vector2 end)
@@ -36,4 +36,5 @@ public static class Helper  {
     {
         return vector / distance(vector);
     }
+
 }

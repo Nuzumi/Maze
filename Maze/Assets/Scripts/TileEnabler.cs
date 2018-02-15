@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControler : MonoBehaviour {
-
+public class TileEnabler : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "tile")
+        if (collision.gameObject.tag == "tile")
         {
             if (!collision.gameObject.transform.GetChild(0).gameObject.activeSelf)
             {
@@ -16,6 +15,4 @@ public class CameraControler : MonoBehaviour {
             }
         }
     }
-
-
 }
