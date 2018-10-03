@@ -11,7 +11,7 @@ public static class Helper  {
 
     public static float distance(Vector2 start, Vector2 end)
     {
-        return Mathf.Sqrt(Mathf.Pow(start.x - end.x, 2) + Mathf.Pow(start.y - end.y, 2));
+        return Mathf.Sqrt(Mathf.Pow(end.x - start.x, 2) + Mathf.Pow(end.y - start.y, 2));
     }
 
     public static float distance(Vector3 start, Vector3 end)

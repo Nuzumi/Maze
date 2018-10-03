@@ -30,18 +30,26 @@ public class MazeGenerator : MonoBehaviour {
         frontierNode = new List<GameObject>();
         edgesList = new List<Tuple<GameObject, GameObject>>();
         visitedNodes = new List<GameObject>();
+
+        StartCoroutine("InitializeWithDelay");
         
+    }
+
+    private IEnumerator InitializeWithDelay()
+    {
+        yield return new WaitForFixedUpdate();
+        Initialize();
     }
 
     public void Initialize()
     {
         nodesList = new List<GameObject>(GameObject.FindGameObjectsWithTag("tile"));
-        makeMaze();
-        renderMaze();
+        MakeMaze();
+        RenderMaze();
         characterControler.GetComponent<CharacterControler>().SetChcaractersStartPoints(nodesList);
     }
 
-    private void makeMaze()//prime
+    private void MakeMaze()//prime
     {
         startNode = nodesList[rand.Next(nodesList.Count)];
         GameObject currentNode = startNode;
@@ -56,9 +64,9 @@ public class MazeGenerator : MonoBehaviour {
 
         while(frontierNode.Count != 0)
         {
-            GameObject nextNode = removeRandomNode(frontierNode);
+            GameObject nextNode = RemoveRandomNode(frontierNode);
             nextNode.GetComponent<Node>().Visited = true;
-            addEdge(nextNode);
+            AddEdge(nextNode);
             visitedNodes.Add(nextNode);
             foreach(GameObject n in nextNode.GetComponent<Node>().neighbours)
             {
@@ -70,19 +78,19 @@ public class MazeGenerator : MonoBehaviour {
         }
     }
 
-    private GameObject removeRandomNode(List<GameObject> list)
+    private GameObject RemoveRandomNode(List<GameObject> list)
     {
         GameObject value = list[rand.Next(list.Count)];
         list.Remove(value);
         return value;
     }
 
-    private GameObject takeRandomNode(List<GameObject> list)
+    private GameObject TakeRandomNode(List<GameObject> list)
     {
         return list[rand.Next(list.Count - 1)];
     }
 
-    private void addEdge(GameObject node)
+    private void AddEdge(GameObject node)
     {
         List<GameObject> tmp = new List<GameObject>();
         foreach(GameObject n in node.GetComponent<Node>().neighbours)
@@ -127,7 +135,7 @@ public class MazeGenerator : MonoBehaviour {
         }
     }
 
-    private void renderMaze()
+    private void RenderMaze()
     {
         foreach(GameObject t in nodesList)
         {

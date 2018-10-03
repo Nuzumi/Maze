@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//raczej narazie nei potrzebna
 public class GameControler : MonoBehaviour {
 
     public GameObject mazeGenerator;
@@ -19,7 +20,7 @@ public class GameControler : MonoBehaviour {
         if(!wasOnce && Time.timeSinceLevelLoad - waitTime > 0)
         {
             wasOnce = true;
-            mazeGenerator.GetComponent<MazeGenerator>().Initialize();
+            //mazeGenerator.GetComponent<MazeGenerator>().Initialize();
         }
 	}
 }

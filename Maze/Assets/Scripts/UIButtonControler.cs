@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIButtonControler : MonoBehaviour {
     
@@ -22,5 +23,10 @@ public class UIButtonControler : MonoBehaviour {
             player.GetComponent<PlayerControler>().CanMove = true;
         }
 
+    }
+
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

@@ -104,13 +104,13 @@ public class EnemyMovement : MonoBehaviour {
                 else
                 {
                     lostCounter = 0;
-                }
-                lastIndex = index;
-                Vector3 diff = playerFollowers[index].transform.position - transform.position;
-                diff.Normalize();
-                float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-                forceTaApply = Helper.getVersor(transform.position, playerFollowers[index].transform.position) * speed;
+                    lastIndex = index;
+                    Vector3 diff = playerFollowers[index].transform.position - transform.position;
+                    diff.Normalize();
+                    float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+                    forceTaApply = Helper.getVersor(transform.position, playerFollowers[index].transform.position) * speed;
+                }   
 
             }
         }

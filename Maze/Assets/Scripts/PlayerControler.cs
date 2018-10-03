@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CnControls;
 
 public class PlayerControler : MonoBehaviour {
 
     public float velocity;
-
+    public float rollVelocityMultiplier;
+    public float rollTime;
 
     public bool CanMove { get; set; }
 
     private Vector2 movementDirection;
     private Rigidbody2D rb;
+    private bool makeingRoll;
+    private float rollStartTime;
 	
 	void Start ()
     {
@@ -21,36 +25,42 @@ public class PlayerControler : MonoBehaviour {
 	
 	void Update ()
     {
-        if (gameObject.activeSelf && CanMove)
+        if (Input.GetKeyDown(KeyCode.Space) && movementDirection != Vector2.zero && !makeingRoll)
         {
-            movementDirection.x = Input.GetAxis("Horizontal");
-            movementDirection.y = Input.GetAxis("Vertical");
+            makeingRoll = true;
+            rollStartTime = Time.timeSinceLevelLoad;
+            velocity *= rollVelocityMultiplier;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad4))
+        if (gameObject.activeSelf && CanMove && !makeingRoll)
         {
-            Debug.Log(GetComponent<ObjectTilePosition>().CheckIfPathIsClear(Node.WalsDirection.left));
+            movementDirection.x = CnInputManager.GetAxis("Horizontal");
+            movementDirection.y = CnInputManager.GetAxis("Vertical");
         }
-
-        if (Input.GetKeyDown(KeyCode.Keypad8))
+        else
         {
-            Debug.Log(GetComponent<ObjectTilePosition>().CheckIfPathIsClear(Node.WalsDirection.top));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            Debug.Log(GetComponent<ObjectTilePosition>().CheckIfPathIsClear(Node.WalsDirection.right));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            Debug.Log(GetComponent<ObjectTilePosition>().CheckIfPathIsClear(Node.WalsDirection.down));
+            if (makeingRoll)
+            {
+                if(rollStartTime + rollTime < Time.timeSinceLevelLoad)
+                {
+                    velocity /= rollVelocityMultiplier;
+                    makeingRoll = false;
+                    rb.velocity = Vector2.zero;
+                }
+            }
         }
     }
 
     private void FixedUpdate()
     {
-            rb.AddForce(movementDirection.normalized * velocity);
+        if (!makeingRoll)
+        {
+            rb.velocity = movementDirection.normalized * velocity * Time.deltaTime;
+        }
+        else
+        {
+            rb.AddForce(movementDirection.normalized * velocity * Time.deltaTime * 3);
+        }
     }
 
 
